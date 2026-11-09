@@ -51,7 +51,8 @@ public class MOB implements Attributes  {
     }
 
     public int getHP() {
-        return maxHP - damage;
+        // getMaxHP() so a Knight's fortune HP bonus is included
+        return getMaxHP() - damage;
     }
 
     @Override

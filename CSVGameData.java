@@ -13,7 +13,9 @@ public class CSVGameData extends GameData {
         loadSaveData(saveData);
     }
 
-    
+    // Loads knights from a save file. Each line has the format:
+    // name,maxHP,armor,hitModifier,damageDie,xp
+    // (the same format as knights.csv, so a saved game can be loaded back in)
     public void loadSaveData(String filename) {
         Scanner file = readFile(filename);
         if (file == null) return;
@@ -30,9 +32,9 @@ public class CSVGameData extends GameData {
                 // First token is the knight's name
                 String name = line.next().trim();
 
-                int maxHP = line.nextInt();
-                int armor = line.nextInt();
-                int hitMod = line.nextInt();
+                int maxHP = Integer.parseInt(line.next().trim());
+                int armor = Integer.parseInt(line.next().trim());
+                int hitMod = Integer.parseInt(line.next().trim());
 
                 // Die token may be "-" or empty
                 String dieToken = line.next().trim();
@@ -43,7 +45,7 @@ public class CSVGameData extends GameData {
                     die = DiceType.valueOf(dieToken);
                 }
 
-                int xp = line.nextInt();
+                int xp = Integer.parseInt(line.next().trim());
 
                 // Auto-generate ID
                 int id = ++idCounter;
@@ -55,10 +57,11 @@ public class CSVGameData extends GameData {
                 System.out.println("Skipping malformed knight line.");
             }
         }
+        file.close();
     }
 
 
-    // loads game data and creates objects based on first letter of each line, F for fortune and M for monster.
+    // loads game data and creates objects based on first token of each line, FORTUNE or MOB.
      public void loadGameData(String filename) {
         Scanner file = readFile(filename);
         if (file == null) 
@@ -67,10 +70,18 @@ public class CSVGameData extends GameData {
         while (file.hasNextLine()) {
             Scanner line = new Scanner(file.nextLine());
             line.useDelimiter(",");
-            parseGameDataLine(line);
+            try {
+                parseGameDataLine(line);
+            } catch (Exception e) {
+                System.out.println("Skipping malformed game data line.");
+            }
         }
+        file.close();
     }
 
+    // Line formats in gamedata.csv:
+    //   FORTUNE,name,hpBonus,armor,hitModifier,damageDie
+    //   MOB,name,maxHP,armor,hitModifier,damageDie
     private void parseGameDataLine(Scanner line) {
         if (!line.hasNext()) return;
 
@@ -80,9 +91,9 @@ public class CSVGameData extends GameData {
 
             case "FORTUNE": {
                 String name = line.next().trim();
-                int armor = line.nextInt();
-                int hitMod = line.nextInt();
-                int hpBonus = line.nextInt();
+                int hpBonus = Integer.parseInt(line.next().trim());
+                int armor = Integer.parseInt(line.next().trim());
+                int hitMod = Integer.parseInt(line.next().trim());
                 String dieToken = line.next().trim();
                 if (dieToken.equals("-") || dieToken.isEmpty()) {
                     fortunes.add(new Fortune(name, armor, hitMod, hpBonus));
@@ -95,9 +106,9 @@ public class CSVGameData extends GameData {
 
             case "MOB": {
                 String name = line.next().trim();
-                int armor = line.nextInt();
-                int hitMod = line.nextInt();
-                int maxHP = line.nextInt();
+                int maxHP = Integer.parseInt(line.next().trim());
+                int armor = Integer.parseInt(line.next().trim());
+                int hitMod = Integer.parseInt(line.next().trim());
                 String dieToken = line.next().trim();
                 DiceType die;
                 if (dieToken.equals("-") || dieToken.isEmpty()) {
@@ -108,6 +119,7 @@ public class CSVGameData extends GameData {
                 }
 
                 monsters.add(new MOB(name, armor, hitMod, maxHP, die));
+                break;
             }
         }
     }
@@ -122,41 +134,15 @@ public class CSVGameData extends GameData {
         }
     }
     
-    // Implementation for saving game data to a CSV file
-   @Override
+    // Saves every knight in the same format loadSaveData reads, one knight per line.
+    @Override
     public void save(String filename) {
         try (PrintWriter out = new PrintWriter(filename)) {
-
-            // Save all knights
             for (Knight kt : knights) {
-                out.println("KNIGHT," + kt.toCSV());
+                out.println(kt.toCSV());
             }
-
-            // Save active knights
-            for (Knight kt : activeKnights) {
-                out.println("ACTIVE," + kt.getId());
-            }
-
-            // Save assigned fortunes
-            for (Knight kt : knights) {
-                if (kt.getActiveFortune() != null) {
-                    out.println("FORTUNE," + kt.getId() + "," + kt.getActiveFortune().getName());
-                }
-            }
-
         } catch (FileNotFoundException e) {
             System.err.println("Unable to save file: " + filename);
         }
     }
-    
-        // find fortune by name, used to assign fortunes used by nights after loading saved characters.
-    private Fortune getFortuneByName(String name) {
-        for (Fortune f : fortunes) {
-            if (f.getName().equalsIgnoreCase(name)) {
-                return f;
-            }
-        }
-        return null;
-    }
 }
-

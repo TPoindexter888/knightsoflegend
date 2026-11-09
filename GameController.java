@@ -25,7 +25,7 @@ public class GameController {
     }
     // Setup as a helper method for start(), processes commands the client passes in through
     protected boolean processCommand(String command) {
-        if (command.equals("exit") || command.equals("bye")) {
+        if (command.equals("exit") || command.equals("bye") || command.equals("goodbye")) {
             return false;
         }
         else if(command.equals("ls") || command.equals("list all")) {
@@ -49,8 +49,12 @@ public class GameController {
             String arg = command.substring("remove active ".length()).trim();
             processRemoveKnight(arg);
         }
-        else if (command.startsWith("save ")) {
-            String filename = command.substring("save ".length()).trim();
+        else if(command.startsWith("remove ")) {
+            String arg = command.substring("remove ".length()).trim();
+            processRemoveKnight(arg);
+        }
+        else if (command.equals("save") || command.startsWith("save ")) {
+            String filename = command.substring("save".length()).trim();
             if (filename.isEmpty()) {
                 data.save("saveData.csv");
             }

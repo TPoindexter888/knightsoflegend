@@ -74,8 +74,10 @@ public class Knight extends MOB{
     }
 
     public String toCSV() {
-        return getName() + "," + getMaxHP() + "," + getArmor() + ","
-           + getHitModifier() + "," + getDamageDie() + "," + xp;
+        // use the base stats (fields), not the getters, so a temporary
+        // fortune bonus is never written into the save file
+        return getName() + "," + maxHP + "," + armor + ","
+           + hitModifier + "," + damageDie + "," + xp;
 
     }
 

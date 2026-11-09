@@ -109,9 +109,9 @@ public class ConsoleView implements GameView {
             System.out.println(
                 "+============================+\n" +
                 String.format("| %-27s|%n", fortuneName) +
-                String.format("| HP Bonus: + %-17d|%n", f.getMaxHP()) +
-                String.format("| AC Bonus: + %-17d|%n", f.getArmor()) +
-                String.format("| Hit Bonus: + %-16d|%n", f.getHitModifier()) +
+                String.format("| HP Bonus: + %-15d|%n", f.getMaxHP()) +
+                String.format("| AC Bonus: + %-15d|%n", f.getArmor()) +
+                String.format("| Hit Bonus: + %-14d|%n", f.getHitModifier()) +
                 String.format("| Damage Adj: + %-13s|%n", damageAdj) +
                 "+============================+"
             );
