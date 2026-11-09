@@ -1,4 +1,4 @@
-package knightsoflegend;
+
 
 public interface Attributes {
    int getArmor();

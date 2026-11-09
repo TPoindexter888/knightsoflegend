@@ -1,4 +1,4 @@
-package knightsoflegend;
+
 
 // MOB class implementing the attributes interface, represents a monster or enemy in the game
 public class MOB implements Attributes  {

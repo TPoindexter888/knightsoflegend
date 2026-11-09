@@ -1,4 +1,5 @@
-package knightsoflegend;
+
+
 
 // Fortune class imnplementing the attributes interface
 public class Fortune implements Attributes {

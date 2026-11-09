@@ -1,4 +1,5 @@
-package knightsoflegend;
+
+
 
 public class Knight extends MOB{
     private Fortune activeFortune = null;
