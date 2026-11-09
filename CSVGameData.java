@@ -1,12 +1,10 @@
-
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.util.Scanner;
 
 public class CSVGameData extends GameData {
-    
+
     public CSVGameData(String gamedata, String saveData) {
         super();
         loadGameData(gamedata);
@@ -60,11 +58,10 @@ public class CSVGameData extends GameData {
         file.close();
     }
 
-
     // loads game data and creates objects based on first token of each line, FORTUNE or MOB.
      public void loadGameData(String filename) {
         Scanner file = readFile(filename);
-        if (file == null) 
+        if (file == null)
             return;
 
         while (file.hasNextLine()) {
@@ -112,8 +109,8 @@ public class CSVGameData extends GameData {
                 String dieToken = line.next().trim();
                 DiceType die;
                 if (dieToken.equals("-") || dieToken.isEmpty()) {
-                    die = DiceType.D6; 
-                }                   
+                    die = DiceType.D6;
+                }
                 else {
                     die = DiceType.valueOf(dieToken);
                 }
@@ -123,8 +120,8 @@ public class CSVGameData extends GameData {
             }
         }
     }
-   
-    // optional method to isolate erros when reading files
+
+    // Opens a file for reading, or returns null (with a message) if it can't be found.
     private Scanner readFile(String filename) {
         try {
             return new Scanner(new File(filename));
@@ -133,7 +130,7 @@ public class CSVGameData extends GameData {
             return null;
         }
     }
-    
+
     // Saves every knight in the same format loadSaveData reads, one knight per line.
     @Override
     public void save(String filename) {

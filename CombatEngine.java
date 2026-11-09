@@ -1,5 +1,3 @@
-
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -8,7 +6,7 @@ public class CombatEngine {
     private GameData data;
     private Random random;
     private GameView view;
-    
+
     public CombatEngine(GameData data, GameView view) {
         this.data = data;
         this.view = view;

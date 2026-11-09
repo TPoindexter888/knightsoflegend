@@ -1,11 +1,7 @@
-
-
-
 public class Knight extends MOB{
     private Fortune activeFortune = null;
-    protected final int id; // id for the knight, used to identify 
+    protected final int id; // id for the knight, used to identify
     protected int xp = 0; // experience points for the knight, used to level up
-    
 
     // constructor for the Knight class
     public Knight(int id, String name, int maxHP, int armor, int hitModifier, DiceType damageDie, int xp) {
@@ -38,7 +34,6 @@ public class Knight extends MOB{
         }
         return damageDie;
     }
-
 
     @Override
     public int getHitModifier() {
@@ -92,5 +87,5 @@ public class Knight extends MOB{
           "|                            |\n" +
           "+============================+";
     }
-    
+
 }

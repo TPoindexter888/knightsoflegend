@@ -1,11 +1,9 @@
-
-
 // MOB class implementing the attributes interface, represents a monster or enemy in the game
 public class MOB implements Attributes  {
     protected int armor;
     protected int damage;
     protected DiceType damageDie;
-    protected int hitModifier; 
+    protected int hitModifier;
     protected int maxHP;
     private String name;
 

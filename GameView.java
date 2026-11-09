@@ -1,5 +1,3 @@
-
-
 import java.util.List;
 public interface GameView {
     boolean checkContinue();
@@ -14,6 +12,6 @@ public interface GameView {
     void printHelp();
     void setActiveFailed();
     void showKnight(Knight knight);
-    void splashScreen(); 
-    
+    void splashScreen();
+
 }

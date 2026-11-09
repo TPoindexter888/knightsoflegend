@@ -1,13 +1,10 @@
-
-
-
-// Fortune class imnplementing the attributes interface
+// A bonus card drawn before each quest. Its values are added to a knight's stats.
 public class Fortune implements Attributes {
     private final int armor;
-    private final DiceType dtype; 
+    private final DiceType dtype;
     private final int hitModifier;
     private final int hpBonus;
-    private final String name; 
+    private final String name;
 
     // constructor for Fortune class with no damage die
     public Fortune (String name, int armor, int hitModifier, int hpBonus) {
@@ -17,7 +14,7 @@ public class Fortune implements Attributes {
         this.hpBonus = hpBonus;
         this.dtype = null;
     }
-    
+
     // constructor for Fortune class with damage die
     public Fortune(String name, int armor, int hitModifier, int hpBonus, DiceType dtype) {
         this.name = name;
@@ -26,7 +23,7 @@ public class Fortune implements Attributes {
         this.hitModifier = hitModifier;
         this.hpBonus = hpBonus;
     }
-    
+
     // getters for the attributes of the Fortune class
     @Override
     public int getArmor() {

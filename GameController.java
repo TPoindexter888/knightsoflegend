@@ -1,5 +1,3 @@
-
-
 public class GameController {
     GameData data;
     CombatEngine engine;
@@ -14,7 +12,7 @@ public class GameController {
     // Starts the game, causing it to run until a client exits. Starts with splashScreen,
     // loops as long as processCommand returns true, prints endgame when loop is done.
     public void start() {
-        
+
         view.splashScreen();
         boolean running = true;
         while (running) {
@@ -23,7 +21,7 @@ public class GameController {
         }
         view.endGame();
     }
-    // Setup as a helper method for start(), processes commands the client passes in through
+    // Handles one command from the player. Returns false when the player wants to quit.
     protected boolean processCommand(String command) {
         if (command.equals("exit") || command.equals("bye") || command.equals("goodbye")) {
             return false;
@@ -70,18 +68,21 @@ public class GameController {
         else if(command.equals("help") || command.equals("?")) {
             view.printHelp();
         }
-    
+        else {
+            // unknown command: remind the player what they can do
+            view.printHelp();
+        }
         return true;
     }
-    
+
     private void processRemoveKnight(String nameOrId) {
         Knight kt = data.getActive(nameOrId);
         if (kt == null) {
             view.knightNotFound();
             return;
-    }
+        }
         data.removeActive(kt);
-}
+    }
 
     private void processSetActive(String active) {
         Knight kt = data.getKnight(active);

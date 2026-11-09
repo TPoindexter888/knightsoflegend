@@ -1,5 +1,3 @@
-
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -29,8 +27,7 @@ public abstract class GameData {
     public List<Knight> getActiveKnights() {
         return activeKnights;
     }
-    
-    
+
     protected Knight findKnight (String nameOrId, List<Knight> knights) {
         for (Knight knight : knights) {
             if (knight.getName().toLowerCase().contains(nameOrId.toLowerCase())) {
@@ -69,7 +66,7 @@ public abstract class GameData {
         int index = random.nextInt(fortunes.size());
         return fortunes.get(index);
     }
-    // gets a random monster as long as the mosters list is less than number of active knights
+    // Returns one random monster per active knight. Monsters are copies, so templates are never damaged.
     public List<MOB> getRandomMonsters() {
         List<MOB> result = new ArrayList<>();
         for (int i = 0; i < activeKnights.size(); i++) {
@@ -79,9 +76,8 @@ public abstract class GameData {
         return result;
     }
 
-
     public List<MOB> getRandomMonsters (int number) {
-        MOB rndmMonster;    
+        MOB rndmMonster;
         List<MOB> selectedMonsters = new ArrayList<>();
         for (int i = 0; i < number; i++) {
             int index = random.nextInt(monsters.size());
@@ -90,7 +86,5 @@ public abstract class GameData {
             }
         return selectedMonsters;
     }
-    
+
 }
-
-

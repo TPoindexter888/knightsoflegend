@@ -1,9 +1,8 @@
-
 import java.util.List;
 import java.util.Scanner;
 
 public class ConsoleView implements GameView {
-    
+
     private final Scanner scan = new Scanner(System.in);
 
     @Override
@@ -23,8 +22,8 @@ public class ConsoleView implements GameView {
 
     @Override
     public void endGame() {
-        System.out.println("Well done, brave knight! You sucessfully counted to three, the Holy Hand Grenade"); 
-        System.out.println("was succesful, and you've finished with only a flesh wound.");
+        System.out.println("Well done, brave knight! You successfully counted to three, the Holy Hand Grenade");
+        System.out.println("was successful, and you've finished with only a flesh wound.");
     }
 
     @Override
@@ -77,7 +76,6 @@ public class ConsoleView implements GameView {
         System.out.println();
     }
 
-
     @Override
     public void printBattleText(MOB dead) {
         System.out.println(dead.getName() + " was defeated!");
@@ -90,42 +88,36 @@ public class ConsoleView implements GameView {
 
     @Override
     public void printFortunes(List<Knight> activeKnights) {
-
         System.out.println("For this quest, our knights drew the following fortunes:");
         for (Knight knight : activeKnights) {
-
             Fortune f = knight.getActiveFortune();
+            String damageAdj = (f.getDamageDie() == null) ? "-" : f.getDamageDie().toString();
 
-            System.out.println(knight.getName() + " drew.");
-
-            String fortuneName = f.getName();
-            String damageAdj;
-            if (f.getDamageDie() == null) {
-                damageAdj = "-";
-        }   
-            else {
-                damageAdj = f.getDamageDie().toString();
-        }
+            System.out.println(knight.getName() + " drew:");
             System.out.println(
                 "+============================+\n" +
-                String.format("| %-27s|%n", fortuneName) +
-                String.format("| HP Bonus: + %-15d|%n", f.getMaxHP()) +
-                String.format("| AC Bonus: + %-15d|%n", f.getArmor()) +
-                String.format("| Hit Bonus: + %-14d|%n", f.getHitModifier()) +
-                String.format("| Damage Adj: + %-13s|%n", damageAdj) +
+                String.format("| %-27s|%n", f.getName()) +
+                fortuneRow("HP Bonus:", String.format("%+d", f.getMaxHP())) +
+                fortuneRow("AC Bonus:", String.format("%+d", f.getArmor())) +
+                fortuneRow("Hit Bonus:", String.format("%+d", f.getHitModifier())) +
+                fortuneRow("Damage Adj:", damageAdj) +
                 "+============================+"
             );
-
             System.out.println();
         }
     }
 
+    // One line of a fortune card: label on the left, value right-aligned.
+    private String fortuneRow(String label, String value) {
+        return String.format("| %-12s%14s |%n", label, value);
+    }
+
     @Override
     public void printHelp() {
-        String Message = """
+        String message = """
 Unsure what to do, here are some options:
     ls or list all  - listing the knights
-    list active  - list the active knights knights only
+    list active  - list the active knights only
     show name or id - show the knight details card
     set active name or id - set knight as active (note: only 4 knights can be active)
     remove active name or id - remove a knight from active status (heals knight)
@@ -136,10 +128,10 @@ Unsure what to do, here are some options:
 Game rules: You can have four active knights. As long as they are active, they won't heal,
 but they can gain XP by going on adventures.
 When you make a knight inactive, they will heal. How many monsters can you defeat
-before, you have to heal?
+before you have to heal?
 """;
-       
-        System.out.println(Message);
+
+        System.out.println(message);
     }
 
     @Override
@@ -155,14 +147,14 @@ before, you have to heal?
 
     @Override
     public void splashScreen() {
-        String Message = """
-Welcome to knights of Legend!
+        String message = """
+Welcome to Knights of Legend!
 
-Your quest begins here, brave knight. 
+Your quest begins here, brave knight.
 Many adventures await you, but first, you must gather your companions.
-The road will be perilous. 
-Lets see if you can change your stars and become a legend!
+The road will be perilous.
+Let's see if you can change your stars and become a legend!
 """;
-        System.out.println(Message);
+        System.out.println(message);
     }
 }
